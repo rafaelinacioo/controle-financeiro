@@ -15,7 +15,7 @@ Access the application:
 - Email: rafael@inacio.com
 - Password: 123
 
-* [Here](https://controle-financeiro-rafael.herokuapp.com/)
+* [Here](https://controle-financeiro-rafael.netlify.app/)
 
 <img width="500" src=".github/01.png" />
 <img width="500" src=".github/02.png" />
