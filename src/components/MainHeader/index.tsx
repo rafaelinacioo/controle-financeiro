@@ -1,48 +1,43 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState, useMemo } from 'react';
+
+import { useTheme } from '../../hooks/useTheme';
+
 import Toggle from '../Toggle';
+import { emojis } from '../../utils/emojis';
 
-import emojis from '../../utils/emojis';
-
-import { useTheme } from '../../hooks/theme';
-
-import { 
-    Container, 
-    Profile, 
-    Welcome, 
-    UserName, 
-}  from './styles';
-
+import { Container, Profile, Welcome, UserName } from './styles';
 
 const MainHeader: React.FC = () => {
-    const { toggleTheme, theme } = useTheme();
+  const { toggleTheme, theme } = useTheme();
 
-    const [darkTheme, setDarkTheme] = useState(() => theme.title === 'dark' ? true : false);
+  const [darkTheme, setDarkTheme] = useState(() =>
+    theme.title === 'dark' ? true : false
+  );
 
-    const handleChangeTheme = () => {
-        setDarkTheme(!darkTheme);
-        toggleTheme();
-    }
+  const emoji = useMemo(() => {
+    const indice = Math.floor(Math.random() * emojis.length);
+    return emojis[indice];
+  }, []);
 
-    const emoji = useMemo(() => {
-        const indice = Math.floor(Math.random() * emojis.length);
-        return emojis[indice];
-    },[]);
+  const HandleChangeTheme = () => {
+    setDarkTheme(!darkTheme);
+    toggleTheme();
+  };
 
-    return (
-        <Container>
-            <Toggle
-                labelLeft="Light"
-                labelRight="Dark"
-                checked={darkTheme}
-                onChange={handleChangeTheme}
-            />
-
-            <Profile>
-                <Welcome>Olá, {emoji}</Welcome>
-                <UserName>Rafael Inácio</UserName>
-            </Profile>
-        </Container>
-    );
-}
+  return (
+    <Container>
+      <Profile>
+        <Welcome>Olá, {emoji}</Welcome>
+        <UserName>Rafael Inácio</UserName>
+      </Profile>
+      <Toggle
+        labelLeft="Light"
+        labelRight="Dark"
+        checked={darkTheme}
+        onChange={HandleChangeTheme}
+      />
+    </Container>
+  );
+};
 
 export default MainHeader;

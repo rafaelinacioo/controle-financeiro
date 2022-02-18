@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { ThemeProvider } from './hooks/theme';
-import { AuthProvider } from './hooks/auth';
-
 import App from './App';
 
+import { ThemeProvider } from './hooks/useTheme';
+import { AuthProvider } from './hooks/useAuth';
+
 ReactDOM.render(
-  <React.StrictMode>    
+  <React.StrictMode>
     <ThemeProvider>
       <AuthProvider>
         <App />

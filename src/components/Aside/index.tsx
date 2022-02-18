@@ -1,94 +1,65 @@
-import React, {useState} from 'react';
-import Toggle from '../Toggle';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 import {
-    MdDashboard,
-    MdArrowDownward,
-    MdArrowUpward,
-    MdExitToApp,
-    MdClose,
-    MdMenu, 
+  MdDashboard,
+  MdArrowUpward,
+  MdArrowDownward,
+  MdExitToApp,
 } from 'react-icons/md';
 
-import logoImg from '../../assets/logo.svg';
+import {
+  Container,
+  Header,
+  LogoImg,
+  Title,
+  MenuContainer,
+  MenuItemLink,
+  MenuItemButton,
+} from './styles';
 
-import { useAuth } from '../../hooks/auth';
-import { useTheme } from '../../hooks/theme';
-
-import { 
-    Container,
-    Header,
-    LogImg,
-    Title,
-    MenuContainer,
-    MenuItemLink,
-    MenuItemButton,
-    ToggleMenu,
-    ThemeToggleFooter,
-}  from './styles';
+import LogoImage from '../../assets/logo.svg';
 
 const Aside: React.FC = () => {
-    const { signOut } = useAuth();
-    const { toggleTheme, theme } = useTheme();
+  const { signOut } = useAuth();
 
-    const [toggleMenuIsOpened, setToggleMenuIsOpened ] = useState(false);
-    const [darkTheme, setDarkTheme] = useState(() => theme.title === 'dark' ? true : false);
+  return (
+    <Container>
+      <Header>
+        <LogoImg src={LogoImage} alt="Logo Controle Financeiro" />
+        <Title>Controle Financeiro</Title>
+      </Header>
 
+      <MenuContainer>
+        <Link style={{ textDecoration: 'none' }} to="/">
+          <MenuItemLink>
+            <MdDashboard />
+            Dashboard
+          </MenuItemLink>
+        </Link>
 
-    const handleToggleMenu = () => {
-        setToggleMenuIsOpened(!toggleMenuIsOpened);
-    }
+        <Link style={{ textDecoration: 'none' }} to="/list/entry-balance">
+          <MenuItemLink>
+            <MdArrowUpward />
+            Entradas
+          </MenuItemLink>
+        </Link>
 
+        <Link style={{ textDecoration: 'none' }} to="/list/exit-balance">
+          <MenuItemLink>
+            <MdArrowDownward />
+            Saídas
+          </MenuItemLink>
+        </Link>
 
-    const handleChangeTheme = () => {
-        setDarkTheme(!darkTheme);
-        toggleTheme();
-    }
-
-
-    return (
-        <Container menuIsOpen={toggleMenuIsOpened}>
-            <Header>
-                <ToggleMenu onClick={handleToggleMenu}>
-                { toggleMenuIsOpened ? <MdClose /> : <MdMenu /> }
-                </ToggleMenu>
-
-                <LogImg src={logoImg} alt="Logo Controle Financeiro" />
-                <Title>Controle Financeiro</Title>
-            </Header>
-
-            <MenuContainer>
-                <MenuItemLink href="/">
-                    <MdDashboard />
-                    Dashboard
-                </MenuItemLink>
-
-                <MenuItemLink href="https://controle-financeiro-rafael.netlify.app//list/entry-balance">
-                    <MdArrowUpward />
-                    Entradas
-                </MenuItemLink>
-
-                <MenuItemLink href="https://controle-financeiro-rafael.netlify.app//list/exit-balance">
-                    <MdArrowDownward />
-                    Saídas
-                </MenuItemLink>
-
-                <MenuItemButton onClick={signOut}>
-                    <MdExitToApp />
-                    Sair
-                </MenuItemButton>
-            </MenuContainer>
-
-            <ThemeToggleFooter menuIsOpen={toggleMenuIsOpened}>
-                <Toggle
-                    labelLeft="Light"
-                    labelRight="Dark"
-                    checked={darkTheme}
-                    onChange={handleChangeTheme}
-                />
-            </ThemeToggleFooter>
-        </Container>
-    );
-}
+        <MenuItemButton onClick={signOut}>
+          <MdExitToApp />
+          Sair
+        </MenuItemButton>
+      </MenuContainer>
+    </Container>
+  );
+};
 
 export default Aside;
